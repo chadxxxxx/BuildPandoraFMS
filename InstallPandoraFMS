@@ -1,0 +1,58 @@
+---
+- name: Install Pandora FMS Monitoring System
+  hosts: all
+
+  tasks:
+
+
+  - name: Enable EPEL Repository on CentOS 8
+    dnf:
+      name: epel-release
+      state: latest
+      become: True
+      when: ansible_facts['os_family'] == 'RedHat' and ansible_facts
+      ['distribution_major_version'] == '8'
+
+  - name: upgrade all packages
+    dnf: name=* state=latest update_cache=yes
+
+  # Download and install Ovirt Repo for Centos/RHEL version 8
+  - name: Install Latest Ovirt Repo.
+    yum:
+      disable_gpg_check: yes
+      name: "https://resources.ovirt.org/pub/yum-repo/ovirt-release44.rpm"
+      state: present
+
+  - name: Add cockpit for Ovirt
+    dnf:
+      name: cockpit
+      state: present
+ 
+  - name: Add cockpit-ovirt-dashboard for Ovirt
+    dnf:
+      name: cockpit-ovirt-dashboard 
+      state: present
+
+  - name: Add gluster-ansible-roles for Ovirt
+    dnf:
+      name: gluster-ansible-roles
+      state: present
+
+  - name: Add ovirt-engine-appliance for Ovirt
+    dnf:
+      name: ovirt-engine-appliance
+      state: present
+      
+  - name: enable service cockpit.socket and ensure it is started
+    ansible.builtin.systemd:
+      name: cockpit.socket
+      enabled: yes
+      masked: no
+      state: started
+
+  - name: enable service libvirtd and ensure it is started
+    ansible.builtin.systemd:
+      name: libvirtd
+      enabled: yes
+      masked: no
+      state: started
