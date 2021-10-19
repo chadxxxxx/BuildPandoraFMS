@@ -56,3 +56,29 @@
       enabled: yes
       masked: no
       state: started
+
+
+
+
+
+
+
+
+
+
+Install Pandora FMS community in CentOS/RHEL in three steps:
+
+Step 1: Activate CentOS Updates, CentOS Extras an EPEL repositories.
+
+Step 2: Add our official repository to your system creating the file /etc/yum.repos.d/pandorafms with the following content
+
+[pandorafms]
+name=CentOS7 – PandoraFMS official repo
+baseurl=http://firefly.pandorafms.com/centos7
+gpgcheck=0
+enabled=1
+
+Step 3: Install the packages from the command line:
+yum install pandorafms_console pandorafms_server mariadb-server
+
+(*) For CentOS8/RHEL8 replace version numbers in repo definition
