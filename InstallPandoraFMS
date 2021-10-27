@@ -82,3 +82,7 @@ Step 3: Install the packages from the command line:
 yum install pandorafms_console pandorafms_server mariadb-server
 
 (*) For CentOS8/RHEL8 replace version numbers in repo definition
+
+
+#####Install Without any additional Steps
+curl -sL https://pfms.me/deploy-pandora-el8 | sh
